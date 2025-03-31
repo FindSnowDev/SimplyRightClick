@@ -1,11 +1,12 @@
 {
   "required": true,
-  "package": "net.findsnow.simplyrightclick.mixin",
+  "package": "net.findsnow.simplyrightclick.core.mixin",
   "compatibilityLevel": "JAVA_21",
   "minVersion": "0.8",
   "client": [
   ],
   "mixins": [
+    "BedBlockMixin"
   ],
   "injectors": {
     "defaultRequire": 1
