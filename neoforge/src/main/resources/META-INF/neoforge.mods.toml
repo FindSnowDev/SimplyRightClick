@@ -1,7 +1,7 @@
 modLoader = "javafml"
 loaderVersion = "[2,)"
 #issueTrackerURL = ""
-license = "MIT"
+license = "All Rights Reserved"
 
 [[mods]]
 modId = "simplyrightclick"
