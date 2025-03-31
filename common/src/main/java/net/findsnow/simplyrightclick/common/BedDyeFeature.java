@@ -42,7 +42,6 @@ public class BedDyeFeature {
 			Block newBedBlock = getBedFromColor(dyeColor);
 
 			if (currentBed == newBedBlock) {
-				// write a red message here on the screen letting the player know they already have the same color bed as the dye
 				return InteractionResult.PASS;
 			}
 
@@ -54,8 +53,10 @@ public class BedDyeFeature {
 			Map<UUID, BlockPos> spawnPoint = new HashMap<>();
 			if (level instanceof ServerLevel) {
 				ServerLevel serverLevel = (ServerLevel) level;
+
 				for (ServerPlayer serverPlayer : serverLevel.getServer().getPlayerList().getPlayers()) {
-					BlockPos playerSpawn = serverPlayer.getRespawnPosition();
+					ServerPlayer.RespawnConfig respawnConfig = serverPlayer.getRespawnConfig();
+					BlockPos playerSpawn = respawnConfig != null ? respawnConfig.pos() : null;
 					if (playerSpawn != null && playerSpawn.equals(headPos)) {
 						spawnPoint.put(serverPlayer.getUUID(), playerSpawn);
 					}
@@ -69,7 +70,8 @@ public class BedDyeFeature {
 				for (Map.Entry<UUID, BlockPos> bedEntry : spawnPoint.entrySet()) {
 					ServerPlayer serverPlayer = serverLevel.getServer().getPlayerList().getPlayer(bedEntry.getKey());
 					if (serverPlayer != null) {
-						serverPlayer.setRespawnPosition(serverLevel.dimension(), headPos, 0, true, false);
+						ServerPlayer.RespawnConfig newRespawnConfig = new ServerPlayer.RespawnConfig(serverLevel.dimension(), headPos, 0.0F, true);
+						serverPlayer.setRespawnPosition(newRespawnConfig, false);
 					}
 				}
 			}
