@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 1,
+  "id": "simplyrightclick",
+  "version": "${version}",
+  "name": "SimplyRightClick",
+  "description": "Simply right click a bed with a dye in hand",
+  "authors": [
+    "FindSnow"
+  ],
+  "contact": {
+    "homepage": ""
+  },
+  "license": "MIT",
+  "icon": "assets/simplyrightclick/icon.png",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "net.findsnow.simplyrightclick.fabric.SimplyRightClickFabric"
+    ],
+    "client": [
+      "net.findsnow.simplyrightclick.fabric.client.SimplyRightClickFabricClient"
+    ]
+  },
+  "mixins": [
+    "simplyrightclick.mixins.json"
+  ],
+  "depends": {
+    "fabricloader": ">=0.16.10",
+    "minecraft": "~1.21.1",
+    "java": ">=21",
+    "architectury": ">=13.0.8",
+    "fabric-api": "*"
+  },
+  "suggests": {
+    "another-mod": "*"
+  }
+}
