@@ -42,7 +42,6 @@ public class BedDyeFeature {
 			Block newBedBlock = getBedFromColor(dyeColor);
 
 			if (currentBed == newBedBlock) {
-				// write a red message here on the screen letting the player know they already have the same color bed as the dye
 				return InteractionResult.PASS;
 			}
 
