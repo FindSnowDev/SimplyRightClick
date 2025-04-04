@@ -1,6 +1,5 @@
 package net.findsnow.simplyrightclick.common;
 
-import dev.architectury.event.EventResult;
 import dev.architectury.event.events.common.InteractionEvent;
 import net.minecraft.core.BlockPos;
 import net.minecraft.core.Direction;
