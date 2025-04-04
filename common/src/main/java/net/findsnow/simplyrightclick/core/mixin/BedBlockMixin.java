@@ -77,7 +77,6 @@ public abstract class BedBlockMixin {
 		};
 	}
 
-
 	@Inject(method = "useWithoutItem", at = @At("HEAD"), cancellable = true)
 	private void onUse(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult, CallbackInfoReturnable<InteractionResult> cir) {
 		ItemStack heldItem = player.getItemInHand(InteractionHand.MAIN_HAND);
