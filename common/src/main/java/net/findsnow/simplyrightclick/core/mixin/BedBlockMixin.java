@@ -7,6 +7,7 @@ import net.minecraft.sounds.SoundEvents;
 import net.minecraft.sounds.SoundSource;
 import net.minecraft.world.InteractionHand;
 import net.minecraft.world.InteractionResult;
+import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.DyeColor;
 import net.minecraft.world.item.DyeItem;
@@ -26,6 +27,11 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 public abstract class BedBlockMixin {
 
 	@Shadow public abstract DyeColor getColor();
+
+	@Unique
+	private void playErrorSound(Entity entity) {
+		entity.playSound(SoundEvents.NOTE_BLOCK_XYLOPHONE.value(), 0.8F, 0.8F + entity.level().getRandom().nextFloat() * 0.4F);
+	}
 
 	@Unique
 	private String getColorAdjective(DyeColor dyeColor)  {
@@ -74,10 +80,6 @@ public abstract class BedBlockMixin {
 
 	@Inject(method = "useWithoutItem", at = @At("HEAD"), cancellable = true)
 	private void onUse(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult, CallbackInfoReturnable<InteractionResult> cir) {
-		if (level.isClientSide()) {
-			return;
-		}
-
 		ItemStack heldItem = player.getItemInHand(InteractionHand.MAIN_HAND);
 		if (heldItem.isEmpty()) {
 			heldItem = player.getItemInHand(InteractionHand.OFF_HAND);
@@ -90,8 +92,7 @@ public abstract class BedBlockMixin {
 
 			if (dyeColor == bedColor) {
 				player.displayClientMessage(Component.literal("[!] This bed is already a " + getColorAdjective(dyeColor) + " shade of " + getColorName(dyeColor) + "!").withStyle(ChatFormatting.RED).withStyle(ChatFormatting.ITALIC), true);
-				float randomPitch = 0.7F + level.getRandom().nextFloat() * 0.4F;
-				level.playSound(null, blockPos, SoundEvents.NOTE_BLOCK_XYLOPHONE.value(), SoundSource.BLOCKS, 1.0F, randomPitch);
+				this.playErrorSound(player);
 				cir.setReturnValue(InteractionResult.SUCCESS);
 			}
 		}
